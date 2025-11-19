@@ -1,3 +1,24 @@
 from funcartur import artur
+from fastapi import FastAPI
+from pydantic import BaseModel
+
 
 print(artur(6,3))
+
+app = FastAPI( title="proj320-23",
+version="1.0.0",
+description="Платформа для покупки и продажи",
+docs_url="/docs",
+redoc_url="/redoc",)
+#debug=settings.DEBUG, # Используем из настроек)
+
+class TwoNumbers(BaseModel):
+ x: float
+ y: float
+
+@app.get("/c2")
+def get_c2(x: float, y: float):
+ return {"result": artur(x, y)}
+@app.post("/c2")
+def post_c2(data: TwoNumbers):
+ return {"result": artur(data.x, data.y)}
