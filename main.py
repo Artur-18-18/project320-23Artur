@@ -1,11 +1,13 @@
 from funcartur import artur
+from funcInoyatov import inoyatov
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 
 print(artur(6,3))
+print(inoyatov(25,5))
 
-app = FastAPI( title="proj320-23",
+app = FastAPI( title="proj320-23Artur",
 version="1.0.0",
 description="Платформа для покупки и продажи",
 docs_url="/docs",
@@ -22,3 +24,10 @@ def get_c2(x: float, y: float):
 @app.post("/c2")
 def post_c2(data: TwoNumbers):
  return {"result": artur(data.x, data.y)}
+
+@app.get("/inoyatov")
+def get_inoyatov(x: float, y: float ):
+    return {"result": inoyatov(x, y)}
+@app.post("/inoyatov")
+def post_inoyatov(data: TwoNumbers):
+    return {"result": inoyatov(data.x, data.y)}
