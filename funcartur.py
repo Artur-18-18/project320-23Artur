@@ -3,3 +3,10 @@ def artur(x, y):
         return "YES"
     else:
         return "NO"
+    
+def inoyatov (x,y):
+    return (x/y)
+
+def func_soliyev(x,y):
+    return x*y
+
