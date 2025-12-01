@@ -34,10 +34,3 @@ def get_inoyatov(x: float, y: float ):
 def post_inoyatov(data: TwoNumbers):
     return {"result": inoyatov(data.x, data.y)}
 
-
-@app.get("/konstantin")
-def get_konstantin(x: float, y: float):
-    return {"result": konstantin(x, y)}
-@app.post("/konstantin")
-def post_konstantin(data: TwoNumbers):
-    return {"result": konstantin(data.x, data.y)}
