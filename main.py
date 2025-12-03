@@ -1,6 +1,7 @@
 from funcartur import artur
 from funcInoyatov import inoyatov
 from functions import konstantin
+import proekt320ShakirjanovXasan as p1
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -8,6 +9,7 @@ from pydantic import BaseModel
 print(artur(6,3))
 print(inoyatov(25,5))
 print(konstantin(3,6))
+print(p1.func1(2,3))
 
 app = FastAPI( title="proj320-23Artur",
 version="1.0.0",
@@ -33,4 +35,11 @@ def get_inoyatov(x: float, y: float ):
 @app.post("/inoyatov")
 def post_inoyatov(data: TwoNumbers):
     return {"result": inoyatov(data.x, data.y)}
+
+@app.get("/p1")
+def get_p1(x: float, y: float):
+    return {"result": p1(x, y)}
+@app.post("/p1")
+def post_c2(data: TwoNumbers):
+    return {"result": p1(data.x, data.y)}
 
