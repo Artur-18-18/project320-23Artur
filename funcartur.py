@@ -7,6 +7,4 @@ def artur(x, y):
 def inoyatov (x,y):
     return (x/y)
 
-def func_soliyev(x,y):
-    return x*y
 
