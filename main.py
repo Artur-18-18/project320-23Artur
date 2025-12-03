@@ -1,13 +1,13 @@
-from funcartur import artur
-from funcInoyatov import inoyatov
-from proekt320ShakirjanovXasan import p1
+from funcartur import artur, inoyatov
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 
 print(artur(6,3))
 print(inoyatov(25,5))
+
 print(p1(2,3))
+
 
 app = FastAPI( title="proj320-23Artur",
 version="1.0.0",
