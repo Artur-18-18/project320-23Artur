@@ -1,6 +1,7 @@
 from funcartur import artur, inoyatov
 from fastapi import FastAPI
 from pydantic import BaseModel
+from proekt320ShakirjanovXasan import p1
 
 
 print(artur(6,3))
