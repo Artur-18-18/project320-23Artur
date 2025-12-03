@@ -2,6 +2,7 @@ from funcartur import artur, inoyatov
 from fastapi import FastAPI
 from pydantic import BaseModel
 from proekt320ShakirjanovXasan import p1
+import funcSoliyev as s
 
 
 print(artur(6,3))
@@ -43,3 +44,10 @@ def get_p1(x: float, y: float):
 def post_p1(data: TwoNumbers):
     return {"result": p1(data.x,data.y)}
 
+@app.get("/soliyev")
+def get_soliyev(x: float, y: float):
+    return {"result": s.func_soliyev(x, y)}
+
+@app.post("/soliyev")
+def post_soliyev(data: TwoNumbers):
+    return {"result": s.func_soliyev(data.x, data.y)}
