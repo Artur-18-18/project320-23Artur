@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Soliyev Avatar API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary-glow: #00f0ff;
+      --secondary-glow: #bc13fe;
+      --bg-dark: #050b14;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-main: #e0f2fe;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--bg-dark);
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e293b' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--text-main);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating particles background effect */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 0.5;
+      }
+
+      80% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: translateY(-20vh) translateX(20px);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow:
+        0 0 40px rgba(0, 240, 255, 0.1),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+      max-width: 480px;
+      width: 90%;
+      position: relative;
+      overflow: hidden;
+      animation: cardEnter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      transform: skewX(-25deg);
+      animation: shine 6s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+
+      20% {
+        left: 200%;
+      }
+
+      100% {
+        left: 200%;
+      }
+    }
+
+    .subtitle {
+      margin: 0 0 30px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--primary-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      color: #fff;
+      font-size: 1.1rem;
+      font-family: 'Rajdhani', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--primary-glow);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .row>div {
+      flex: 1;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: #fff;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(0, 114, 255, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0, 114, 255, 0.6);
+      filter: brightness(1.1);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .result-box {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+      position: relative;
+    }
+
+    .result-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.1);
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 2.5rem;
+      font-family: 'Orbitron', sans-serif;
+      color: var(--primary-glow);
+      text-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .error {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255, 50, 50, 0.1);
+      border: 1px solid rgba(255, 50, 50, 0.3);
+      color: #ff6b6b;
+      text-align: center;
+      font-size: 1rem;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      75% {
+        transform: translateX(5px);
+      }
+    }
+
+    .api-base {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.3);
+      text-align: center;
+      margin-top: 20px;
+      font-family: monospace;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="card">
+    <h1>ARTUR SYSTEM</h1>
+    <p class="subtitle">Интерфейс вычислений</p>
+
+    <div class="row">
+      <div class="input-group">
+        <label for="x">Параметр X</label>
+        <input type="number" id="x" placeholder="0.0" step="any" />
+      </div>
+      <div class="input-group">
+        <label for="y">Параметр Y</label>
+        <input type="number" id="y" placeholder="0.0" step="any" />
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="operation">Протокол</label>
+      <select id="operation">
+        <option value="c2">Ilyas-Вычислить гипотенузу</option>
+        <option value="soliyev">Soliyev-Умножение чисел</option>
+        <option value="artur">Artur-Что больше: X?</option>
+        <option value="inoyatov">Inoyatov-Деление чисел</option>
+        <option value="Shakirjanov">Shakirjanov function-(x*6+y*7)</option>
+      </select>
+    </div>
+
+    <button id="calculateBtn">ИНИЦИАЛИЗИРОВАТЬ</button>
+
+    <div class="result-box" id="resultBox" style="display: none;">
+      <div class="result-label">Результат вычисления</div>
+      <div class="result-value" id="resultValue"></div>
+    </div>
+
+    <div class="error" id="errorBox" style="display: none;"></div>
+
+    <div class="api-base">
+      Связь с ядром: <span id="apiStatus">Ожидание...</span>
+    </div>
+  </div>
+
+  <script>
+    // Particle generation
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.width = Math.random() * 4 + 1 + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    const API_BASE = window.location.origin;
+    document.getElementById('apiStatus').textContent = API_BASE;
+
+    const xInput = document.getElementById("x");
+    const yInput = document.getElementById("y");
+    const opSelect = document.getElementById("operation");
+    const calcBtn = document.getElementById("calculateBtn");
+    const resultBox = document.getElementById("resultBox");
+    const resultValue = document.getElementById("resultValue");
+    const errorBox = document.getElementById("errorBox");
+
+    async function calculate() {
+      errorBox.style.display = "none";
+      resultBox.style.display = "none";
+
+      // Add loading state to button
+      const originalBtnText = calcBtn.textContent;
+      calcBtn.textContent = "ВЫЧИСЛЕНИЕ...";
+      calcBtn.disabled = true;
+      calcBtn.style.opacity = "0.7";
+
+      const x = parseFloat(xInput.value);
+      const y = parseFloat(yInput.value);
+
+      if (isNaN(x) || isNaN(y)) {
+        errorBox.textContent = "ОШИБКА: Некорректные входные данные";
+        errorBox.style.display = "block";
+        resetBtn(originalBtnText);
+        return;
+      }
+
+      const operation = opSelect.value;
+      const url = `${API_BASE}/${operation}`;
+
+      try {
+        // Simulate a small delay for effect
+        await new Promise(r => setTimeout(r, 400));
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ x, y }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Ошибка протокола: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!("result" in data)) {
+          throw new Error("Сбой данных ядра");
+        }
+
+        // Format result if it's a long decimal
+        let res = data.result;
+        if (typeof res === 'number' && !Number.isInteger(res)) {
+          res = res.toFixed(4);
+        }
+
+        resultValue.textContent = res;
+        resultBox.style.display = "block";
+      } catch (err) {
+        errorBox.textContent = "КРИТИЧЕСКАЯ ОШИБКА: " + err.message;
+        errorBox.style.display = "block";
+      } finally {
+        resetBtn(originalBtnText);
+      }
+    }
+
+    function resetBtn(text) {
+      calcBtn.textContent = text;
+      calcBtn.disabled = false;
+      calcBtn.style.opacity = "1";
+    }
+
+    calcBtn.addEventListener("click", calculate);
+
+    [xInput, yInput].forEach((input) => {
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          calculate();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

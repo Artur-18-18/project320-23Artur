@@ -1,8 +1,11 @@
 from funcartur import artur, inoyatov
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from proekt320ShakirjanovXasan import p1
 import funcSoliyev as s
+from pathlib import Path
 
 
 print(artur(6,3))
@@ -51,3 +54,26 @@ def get_soliyev(x: float, y: float):
 @app.post("/soliyev")
 def post_soliyev(data: TwoNumbers):
     return {"result": s.func_soliyev(data.x, data.y)}
+
+@app.get("/c2")
+def get_c2(x: float, y: float):
+    return {"result": inoyatov(x, y)}
+
+@app.post("/c2")
+def post_c2(data: TwoNumbers):
+    return {"result": inoyatov(data.x, data.y)}
+
+@app.get("/")
+def read_root():
+    """Возвращает index.html при открытии корневого URL"""
+    try:
+        file_path = Path(__file__).parent / "index.html"
+        print(f"Trying to open: {file_path}")
+        print(f"File exists: {file_path.exists()}")
+        if file_path.exists():
+            return FileResponse(str(file_path), media_type="text/html")
+        else:
+            return {"error": f"File not found: {file_path}"}
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"error": str(e)}
