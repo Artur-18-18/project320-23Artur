@@ -55,13 +55,13 @@ def get_soliyev(x: float, y: float):
 def post_soliyev(data: TwoNumbers):
     return {"result": s.func_soliyev(data.x, data.y)}
 
-@app.get("/c2")
-def get_c2(x: float, y: float):
-    return {"result": inoyatov(x, y)}
+@app.get("/Rashidov")
+def get_rashidov(x: float, y: float):
+    return {"result": rashidov(x, y)}
 
-@app.post("/c2")
-def post_c2(data: TwoNumbers):
-    return {"result": inoyatov(data.x, data.y)}
+@app.post("/Rashidov")
+def post_rashidov(data: TwoNumbers):
+    return {"result": rashidov(data.x, data.y)}
 
 @app.get("/")
 def read_root():
