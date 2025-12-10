@@ -55,6 +55,17 @@ def get_soliyev(x: float, y: float):
 def post_soliyev(data: TwoNumbers):
     return {"result": s.func_soliyev(data.x, data.y)}
 
+# Ilyas: вычислить гипотенузу (c2)
+@app.get("/c2")
+def get_c2_ilyas(x: float, y: float):
+    """Возвращает гипотенузу для прямоугольного треугольника: sqrt(x^2 + y^2)"""
+    return {"result": (x**2 + y**2) ** 0.5}
+
+@app.post("/c2")
+def post_c2_ilyas(data: TwoNumbers):
+    """POST: принимает JSON {x, y} и возвращает hypot"""
+    return {"result": (data.x**2 + data.y**2) ** 0.5}
+
 @app.get("/Rashidov")
 def get_rashidov(x: float, y: float):
     return {"result": rashidov(x, y)}
